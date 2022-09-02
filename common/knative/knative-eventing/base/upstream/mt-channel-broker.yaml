@@ -151,6 +151,20 @@ spec:
         eventing.knative.dev/brokerRole: filter
         eventing.knative.dev/release: "v0.22.1"
     spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/master"
+                    operator: In
+                    values: [""]
+              weight: 1
       serviceAccountName: mt-broker-filter
       enableServiceLinks: false
       containers:
@@ -254,6 +268,20 @@ spec:
         eventing.knative.dev/brokerRole: ingress
         eventing.knative.dev/release: "v0.22.1"
     spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/master"
+                    operator: In
+                    values: [""]
+              weight: 1
       serviceAccountName: mt-broker-ingress
       enableServiceLinks: false
       containers:
@@ -357,7 +385,20 @@ spec:
         app: mt-broker-controller
         eventing.knative.dev/release: "v0.22.1"
     spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
       affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/master"
+                    operator: In
+                    values: [""]
+              weight: 1
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
             - podAffinityTerm:
