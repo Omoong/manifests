@@ -2979,6 +2979,11 @@ spec:
         service.istio.io/canonical-revision: latest
         sidecar.istio.io/inject: 'false'
     spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
       affinity:
         nodeAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -3003,6 +3008,12 @@ spec:
                 values:
                 - s390x
             weight: 2
+          - preference:
+              matchExpressions:
+                - key: "node-role.kubernetes.io/master"
+                  operator: In
+                  values: [""]
+            weight: 1
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
@@ -3209,6 +3220,20 @@ spec:
         operator.istio.io/component: Pilot
         sidecar.istio.io/inject: 'false'
     spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/master"
+                    operator: In
+                    values: [""]
+              weight: 1
       containers:
       - args:
         - discovery
