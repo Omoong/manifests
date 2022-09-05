@@ -16,6 +16,20 @@ spec:
       annotations:
         sidecar.istio.io/inject: "true"
     spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/master"
+                    operator: In
+                    values: [""]
+              weight: 1
       containers:
       - name: centraldashboard
         image: public.ecr.aws/j1r0q0g6/notebooks/central-dashboard

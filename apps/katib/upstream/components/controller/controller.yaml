@@ -19,6 +19,20 @@ spec:
         prometheus.io/port: "8080"
         sidecar.istio.io/inject: "false"
     spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/master"
+                    operator: In
+                    values: [""]
+              weight: 1
       serviceAccountName: katib-controller
       containers:
         - name: katib-controller

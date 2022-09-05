@@ -12567,6 +12567,20 @@ spec:
         control-plane: kserve-controller-manager
         controller-tools.k8s.io: "1.0"
     spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/master"
+                    operator: In
+                    values: [""]
+              weight: 1
       containers:
       - args:
         - --metrics-addr=127.0.0.1:8080
