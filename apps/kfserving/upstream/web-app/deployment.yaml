@@ -13,6 +13,20 @@ spec:
       labels:
         app.kubernetes.io/component: kfserving-models-web-app
     spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: "node-role.kubernetes.io/master"
+                    operator: In
+                    values: [""]
+              weight: 1
       containers:
       - image: kfserving/models-web-app:v0.6.1
         imagePullPolicy: Always

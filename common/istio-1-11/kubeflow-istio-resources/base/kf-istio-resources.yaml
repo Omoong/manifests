@@ -6,9 +6,20 @@ spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 80
+  - hosts:
+    - '*'
+    port:
       name: http
+      number: 80
       protocol: HTTP
-    hosts:
-    - "*"
+    tls:
+      httpsRedirect: true
+  - hosts:
+    - '*'
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: istio-ingressgateway-certs
+      mode: SIMPLE
