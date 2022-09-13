@@ -3008,12 +3008,6 @@ spec:
                 values:
                 - s390x
             weight: 2
-          - preference:
-              matchExpressions:
-                - key: "node-role.kubernetes.io/master"
-                  operator: In
-                  values: [""]
-            weight: 1
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
@@ -3023,6 +3017,11 @@ spec:
                 - amd64
                 - ppc64le
                 - s390x
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/master"
+                operator: In
+                values: [""]
+
       containers:
       - args:
         - proxy
@@ -3227,13 +3226,12 @@ spec:
         effect: "NoSchedule"
       affinity:
         nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - preference:
-                matchExpressions:
-                  - key: "node-role.kubernetes.io/master"
-                    operator: In
-                    values: [""]
-              weight: 1
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/master"
+                operator: In
+                values: [""]
       containers:
       - args:
         - discovery
