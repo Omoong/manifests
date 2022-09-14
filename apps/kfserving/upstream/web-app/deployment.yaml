@@ -20,13 +20,12 @@ spec:
         effect: "NoSchedule"
       affinity:
         nodeAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - preference:
-                matchExpressions:
-                  - key: "node-role.kubernetes.io/master"
-                    operator: In
-                    values: [""]
-              weight: 1
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/master"
+                operator: In
+                values: [""]
       containers:
       - image: kfserving/models-web-app:v0.6.1
         imagePullPolicy: Always

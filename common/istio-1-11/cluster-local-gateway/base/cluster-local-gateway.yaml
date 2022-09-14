@@ -62,12 +62,6 @@ spec:
           preferredDuringSchedulingIgnoredDuringExecution:
           - preference:
               matchExpressions:
-              - key: "node-role.kubernetes.io/master"
-                operator: In
-                values: [""]
-            weight: 1
-          - preference:
-              matchExpressions:
               - key: kubernetes.io/arch
                 operator: In
                 values:
@@ -96,6 +90,10 @@ spec:
                 - amd64
                 - ppc64le
                 - s390x
+            - matchExpressions:
+              - key: "node-role.kubernetes.io/master"
+                operator: In
+                values: [""]
       containers:
       - args:
         - proxy
