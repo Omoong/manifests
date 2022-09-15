@@ -3017,7 +3017,6 @@ spec:
                 - amd64
                 - ppc64le
                 - s390x
-            - matchExpressions:
               - key: "node-role.kubernetes.io/master"
                 operator: In
                 values: [""]
