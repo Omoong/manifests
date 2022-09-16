@@ -180,6 +180,27 @@ def server_factory(visualization_server_image,
                                 } or {},
                             },
                             "spec": {
+                                "tolerations": [{
+                                    "key": "node-role.kubernetes.io/master",
+                                    "operator": "Equal",
+                                    "value": "",
+                                    "effect": "NoSchedule"
+                                }],
+                                "affinity": {
+                                    "nodeAffinity": {
+                                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                                            "nodeSelectorTerms": [{
+                                                "matchExpressions": [{
+                                                    "key": "node-role.kubernetes.io/master",
+                                                    "operator": "In",
+                                                    "values": [
+                                                        ""
+                                                    ]
+                                                }]
+                                            }]
+                                        }
+                                    }
+                                },
                                 "containers": [{
                                     "image": f"{visualization_server_image}:{visualization_server_tag}",
                                     "imagePullPolicy":
@@ -290,6 +311,27 @@ def server_factory(visualization_server_image,
                                 } or {},
                             },
                             "spec": {
+                                "tolerations": [{
+                                    "key": "node-role.kubernetes.io/master",
+                                    "operator": "Equal",
+                                    "value": "",
+                                    "effect": "NoSchedule"
+                                }],
+                                "affinity": {
+                                    "nodeAffinity": {
+                                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                                            "nodeSelectorTerms": [{
+                                                "matchExpressions": [{
+                                                    "key": "node-role.kubernetes.io/master",
+                                                    "operator": "In",
+                                                    "values": [
+                                                        ""
+                                                    ]
+                                                }]
+                                            }]
+                                        }
+                                    }
+                                },
                                 "containers": [{
                                     "name":
                                         "ml-pipeline-ui-artifact",
